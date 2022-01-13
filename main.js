@@ -60,7 +60,7 @@ function updateSigninStatus(isSignedIn) {
     // createSheet();
     console.log("Succesfully Signed In")
   } else {
-    console.log("Logged out")
+    console.log("Logged out", CLIENT_ID)
     authorizeButton.style.display = 'block';
     signoutButton.style.display = 'none';
     createButton.style.display = 'none';
