@@ -1,13 +1,13 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = config.clientId;
-var API_KEY = config.apiKey;
+var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
-var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
+var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
-var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+var SCOPES = "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive";
 
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
@@ -60,7 +60,7 @@ function updateSigninStatus(isSignedIn) {
     // createSheet();
     console.log("Succesfully Signed In")
   } else {
-    console.log("Logged out")
+    console.log("Logged out", CLIENT_ID)
     authorizeButton.style.display = 'block';
     signoutButton.style.display = 'none';
     createButton.style.display = 'none';
@@ -113,7 +113,17 @@ function createSheet() {
 
     var values = [
     [
-      'Name', 'What do you want to do?', 'What kills do you think you need?'
+      'Name', 
+      'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
+      'What Nutanix core values do you most strongly demonstrate?',
+      'What Nutanix core values do you feel you need to demonstrate more effectively?',
+      'What professional values motivate you?',
+      'What is most important to you in your career?',
+      'What are your strongest skills and abilities?',
+      'What are some areas you would like to improve upon?',
+      'What goals do you have for your career over the next two years?',
+      'What goals do you have for your career beyond two years?',
+
     ],
     // Additional rows ...
     ];
@@ -123,7 +133,7 @@ function createSheet() {
 
     gapi.client.sheets.spreadsheets.values.update({
       spreadsheetId: sheetId,
-      range: 'Sheet1!A1:C1',
+      range: 'Sheet1!A1:K1',
       valueInputOption: 'RAW',
       resource: body
     }).then((response) => {
@@ -141,10 +151,36 @@ function submitForm() {
   var nameBox = document.getElementById('name');
   var q1Box = document.getElementById('q1');
   var q2Box = document.getElementById('q2');
+  var q3Box = document.getElementById('q3');
+  var q4Box = document.getElementById('q4');
+  var q5Box = document.getElementById('q5');
+  var q6Box = document.getElementById('q6');
+  var q7Box = document.getElementById('q7');
+  var q8Box = document.getElementById('q8');
+  var q9Box = document.getElementById('q9');
 
   var name = nameBox.value;
   var q1 = q1Box.value;
   var q2 = q2Box.value;
+  var q3 = q3Box.value;
+  var q4 = q4Box.value;
+  var q5 = q5Box.value;
+  var q6 = q6Box.value;
+  var q7 = q7Box.value;
+  var q8 = q8Box.value;
+  var q9 = q9Box.value;
+
+  var body = {
+    name: name + ' IDP',
+  }
+
+  gapi.client.drive.files.update({
+    fileId: sheetId,
+    resource: body,
+  }).then((response) => {
+    var result = response.result;
+    console.log(`Name Changed`);
+  });
 
   console.log(name);
   console.log(q1);
@@ -152,17 +188,17 @@ function submitForm() {
   
   var values = [
     [
-      name, q1, q2
+      name, q1, q2, q3, q4, q5, q6, q7, q8, q9
     ],
     // Additional rows ...
   ];
-  var body = {
+  body = {
     values: values
   };
 
   gapi.client.sheets.spreadsheets.values.update({
     spreadsheetId: sheetId,
-    range: 'Sheet1!A2:C2',
+    range: 'Sheet1!A2:K2',
     valueInputOption: 'RAW',
     resource: body
   }).then((response) => {
