@@ -113,7 +113,17 @@ function createSheet() {
 
     var values = [
     [
-      'Name', 'What do you want to do?', 'What kills do you think you need?'
+      'Name', 
+      'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
+      'What Nutanix core values do you most strongly demonstrate?',
+      'What Nutanix core values do you feel you need to demonstrate more effectively?',
+      'What professional values motivate you?',
+      'What is most important to you in your career?',
+      'What are your strongest skills and abilities?',
+      'What are some areas you would like to improve upon?',
+      'What goals do you have for your career over the next two years?',
+      'What goals do you have for your career beyond two years?',
+
     ],
     // Additional rows ...
     ];
