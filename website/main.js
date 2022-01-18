@@ -112,19 +112,16 @@ function createSheet() {
     sheetId = reply.spreadsheetId;
 
     var values = [
-    [
-      'Name', 
-      'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
-      'What Nutanix core values do you most strongly demonstrate?',
-      'What Nutanix core values do you feel you need to demonstrate more effectively?',
-      'What professional values motivate you?',
-      'What is most important to you in your career?',
-      'What are your strongest skills and abilities?',
-      'What are some areas you would like to improve upon?',
-      'What goals do you have for your career over the next two years?',
-      'What goals do you have for your career beyond two years?',
-
-    ],
+    ['Name'], 
+    ['Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).'], 
+    ['What Nutanix core values do you most strongly demonstrate?'],
+    ['What Nutanix core values do you feel you need to demonstrate more effectively?'],
+    ['What professional values motivate you?'],
+    ['What is most important to you in your career?'],
+    ['What are your strongest skills and abilities?'],
+    ['What are some areas you would like to improve upon?'],
+    ['What goals do you have for your career over the next two years?'],
+    ['What goals do you have for your career beyond two years?'],
     // Additional rows ...
     ];
     var body = {
@@ -133,7 +130,7 @@ function createSheet() {
 
     gapi.client.sheets.spreadsheets.values.update({
       spreadsheetId: sheetId,
-      range: 'Sheet1!A1:K1',
+      range: 'Sheet1!A1:A10',
       valueInputOption: 'RAW',
       resource: body
     }).then((response) => {
@@ -187,9 +184,16 @@ function submitForm() {
   console.log(q2);
   
   var values = [
-    [
-      name, q1, q2, q3, q4, q5, q6, q7, q8, q9
-    ],
+    [name], 
+    [q1], 
+    [q2], 
+    [q3], 
+    [q4], 
+    [q5], 
+    [q6], 
+    [q7], 
+    [q8], 
+    [q9]
     // Additional rows ...
   ];
   body = {
@@ -198,7 +202,7 @@ function submitForm() {
 
   gapi.client.sheets.spreadsheets.values.update({
     spreadsheetId: sheetId,
-    range: 'Sheet1!A2:K2',
+    range: 'Sheet1!B1:B10',
     valueInputOption: 'RAW',
     resource: body
   }).then((response) => {
