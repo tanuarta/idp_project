@@ -123,6 +123,7 @@ function createSheet() {
     var values = [
     [
       'Name', 
+      'Quarter',
       'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
       'What Nutanix core values do you most strongly demonstrate?',
       'What Nutanix core values do you feel you need to demonstrate more effectively?',
@@ -158,6 +159,7 @@ function createSheet() {
 
 function submitForm() {
   var nameBox = document.getElementById('name');
+  var quarterBox = document.getElementById('quarter');
   var q1Box = document.getElementById('q1');
   var q2Box = document.getElementById('q2');
   var q3Box = document.getElementById('q3');
@@ -169,6 +171,7 @@ function submitForm() {
   var q9Box = document.getElementById('q9');
 
   var name = nameBox.value;
+  var quarter = quarterBox.value;
   var q1 = q1Box.value;
   var q2 = q2Box.value;
   var q3 = q3Box.value;
@@ -180,7 +183,7 @@ function submitForm() {
   var q9 = q9Box.value;
 
   var body = {
-    name: name + ' IDP',
+    name: name + ' IDP' + quarter,
   }
 
   gapi.client.drive.files.update({
@@ -197,7 +200,7 @@ function submitForm() {
   
   var values = [
     [
-      name, q1, q2, q3, q4, q5, q6, q7, q8, q9
+      name, quarter, q1, q2, q3, q4, q5, q6, q7, q8, q9
     ],
     // Additional rows ...
   ];
