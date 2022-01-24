@@ -3,14 +3,17 @@
   <head>
     <title>IDP Prototype</title>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <h2>IDP Prototype</h2>
 
-    <div id="idp_questions" style="display: none">
+    <div id="idp_questions_0" style="display: none">
       <label for="name">Name:</label>
-      <input type="text" id="name" name="name">
+      <input type="text" id="name" name="name" style="width: 400px">
       <br>
+      <label for="name">Google email of Manager:</label>
+      <input type="text" id="manEmail" name="manEmail" style="width: 400px">
       <br>
       <label for="q1">Describe your history with Nutanix, and any pertinent prior work experience
          (including relevant skills you have acquired in these past roles).</label>
@@ -25,7 +28,9 @@
       <br>
       <input type="text" id="q3" name="q3">
       <br>
+    </div>
 
+    <div id="idp_questions_1" style="display: none">
       <h3>Motivation</h3>
       <label for="q4">What professional values motivate you?</label>
       <br>
@@ -35,7 +40,9 @@
       <br>
       <input type="text" id="q5" name="q5">
       <br>
+    </div>
 
+    <div id="idp_questions_2" style="display: none">
       <h3>Strengths/Skills</h3>
       <label for="q6">What are your strongest skills and abilities?</label>
       <br>
@@ -48,7 +55,9 @@
       <br>
       <input type="text" id="q7" name="q7">
       <br>
+    </div>
 
+    <div id="idp_questions_3" style="display: none">
       <h3>Short/Long Term Goals</h3>
       <label for="q8">What goals do you have for your career over the next two years?</label>
       <br>
@@ -65,6 +74,8 @@
     <button id="signout_button" style="display: none;">Sign Out</button>
     <button id="create_button" onclick="createSheet()" style="display: none;">Create Sheet</button>
     <button id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
+    <button id="next_button" onClick="nextPage()" style="display: none;">Next</button>
+    <button id="back_button" onClick="prevPage()" style="display: none;">Back</button>
 
     <script type="text/javascript" src='main.js'></script>
 

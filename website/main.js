@@ -13,10 +13,20 @@ var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var createButton = document.getElementById('create_button');
 var submitButton = document.getElementById('submit_form');
+var nextButton = document.getElementById('next_button');
+var backButton = document.getElementById('back_button');
 
-var idpQuestions = document.getElementById('idp_questions');
+const idpQuestions = [
+  document.getElementById('idp_questions_0'),
+  document.getElementById('idp_questions_1'),
+  document.getElementById('idp_questions_2'),
+  document.getElementById('idp_questions_3')
+];
 
-var sheetId = "dummy";
+var sheetId = 'dummy';
+var currentPage = 0;
+var fileId = 'dummy';
+var parentId = 'dummy';
 
 /**
  *  On load, called to load the auth2 library and API client library.
@@ -99,53 +109,16 @@ function appendPre(message) {
  */
 
 function createSheet() {
-  gapi.client.sheets.spreadsheets.create({
-    properties: {
-      title: 'Cool New Sheet'
-    }
-  }).then((response) => {
-    const reply = JSON.parse(response.body);
-    console.log(reply.spreadsheetId);
-    idpQuestions.style.display = 'block';
-    createButton.style.display = 'none';
-    submitButton.style.display = 'block';
-    sheetId = reply.spreadsheetId;
-
-    var values = [
-    ['Name'], 
-    ['Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).'], 
-    ['What Nutanix core values do you most strongly demonstrate?'],
-    ['What Nutanix core values do you feel you need to demonstrate more effectively?'],
-    ['What professional values motivate you?'],
-    ['What is most important to you in your career?'],
-    ['What are your strongest skills and abilities?'],
-    ['What are some areas you would like to improve upon?'],
-    ['What goals do you have for your career over the next two years?'],
-    ['What goals do you have for your career beyond two years?'],
-    // Additional rows ...
-    ];
-    var body = {
-      values: values
-    };
-
-    gapi.client.sheets.spreadsheets.values.update({
-      spreadsheetId: sheetId,
-      range: 'Sheet1!A1:A10',
-      valueInputOption: 'RAW',
-      resource: body
-    }).then((response) => {
-      var result = response.result;
-      console.log(`${result.updatedCells} cells updated.`);
-    });
-
-  }).catch((response) => {
-    const reply = JSON.parse(response.body);
-    console.log(reply);
-  });
+  idpQuestions[currentPage].style.display = 'block';
+  createButton.style.display = 'none';
+  nextButton.style.display = 'block';
+  signoutButton.style.display= 'none';
 }
 
 function submitForm() {
+
   var nameBox = document.getElementById('name');
+  var manEmail = document.getElementById('manEmail');
   var q1Box = document.getElementById('q1');
   var q2Box = document.getElementById('q2');
   var q3Box = document.getElementById('q3');
@@ -157,6 +130,7 @@ function submitForm() {
   var q9Box = document.getElementById('q9');
 
   var name = nameBox.value;
+  var mEmail = manEmail.value;
   var q1 = q1Box.value;
   var q2 = q2Box.value;
   var q3 = q3Box.value;
@@ -167,52 +141,190 @@ function submitForm() {
   var q8 = q8Box.value;
   var q9 = q9Box.value;
 
-  var body = {
-    name: name + ' IDP',
-  }
-
-  gapi.client.drive.files.update({
-    fileId: sheetId,
-    resource: body,
+  gapi.client.drive.files.list({
+    q: "mimeType='application/vnd.google-apps.folder' and name='IDP'",
+    spaces: 'drive',
+    fields: 'nextPageToken, files(id, name)'
   }).then((response) => {
-    var result = response.result;
-    console.log(`Name Changed`);
-  });
+    const reply = JSON.parse(response.body);
+    const fileArray = reply['files']
 
-  console.log(name);
-  console.log(q1);
-  console.log(q2);
+    if (fileArray.length === 0) {
+      console.log('asdasd')
+      body = {
+        mimeType : 'application/vnd.google-apps.folder',
+        name : 'IDP'
+      }
+
+      gapi.client.drive.files.create({
+        resource: body
+      }).then((response) => {
+        const reply = JSON.parse(response.body);
+        console.log(reply['id'])
+        folderId = reply['id']
+      }).catch((response) => {
+        console.log(response);
+      })
+    } else {
+      console.log(fileArray);
+      folderId = fileArray[0]['id'];
+    }
+
+    gapi.client.sheets.spreadsheets.create({
+      properties: {
+        title: name + ' IDP'
+      }
+    }).then((response) => {
+      const reply = JSON.parse(response.body);
+      console.log(reply.spreadsheetId);
+      
+      sheetId = reply.spreadsheetId;
   
-  var values = [
-    [name], 
-    [q1], 
-    [q2], 
-    [q3], 
-    [q4], 
-    [q5], 
-    [q6], 
-    [q7], 
-    [q8], 
-    [q9]
-    // Additional rows ...
-  ];
-  body = {
-    values: values
-  };
+      var values = [
+      [
+        'Name', 
+        'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
+        'What Nutanix core values do you most strongly demonstrate?',
+        'What Nutanix core values do you feel you need to demonstrate more effectively?',
+        'What professional values motivate you?',
+        'What is most important to you in your career?',
+        'What are your strongest skills and abilities?',
+        'What are some areas you would like to improve upon?',
+        'What goals do you have for your career over the next two years?',
+        'What goals do you have for your career beyond two years?',
+  
+      ]];
+      
+      var body = {
+        values: values
+      };
+  
+      gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: sheetId,
+        range: 'Sheet1!A1:K1',
+        valueInputOption: 'RAW',
+        resource: body
+      }).then((response) => {
+        var result = response.result;
+        console.log(`${result.updatedCells} cells updated.`);
+      });
+    
+      console.log(name);
+      console.log(q1);
+      console.log(q2);
+      
+      values = [
+        [
+          name, q1, q2, q3, q4, q5, q6, q7, q8, q9
+        ]];
+  
+      body = {
+        values: values
+      };
+  
+      gapi.client.sheets.spreadsheets.values.update({
+        spreadsheetId: sheetId,
+        range: 'Sheet1!A2:K2',
+        valueInputOption: 'RAW',
+        resource: body
+      }).then((response) => {
+        var result = response.result;
+        console.log(`${result.updatedCells} cells updated.`);
+      });
+  
+      body = {
+        role: 'writer',
+        type: 'user',
+        emailAddress: mEmail,
+      }
+  
+      gapi.client.drive.permissions.create({
+        fileId: sheetId,
+        resource: body,
+      }).then((response) => {
+        var result = response.result;
+        console.log(result)
+        console.log(`Permission Changed`);
+      });
 
-  gapi.client.sheets.spreadsheets.values.update({
-    spreadsheetId: sheetId,
-    range: 'Sheet1!B1:B10',
-    valueInputOption: 'RAW',
-    resource: body
-  }).then((response) => {
-    var result = response.result;
-    console.log(`${result.updatedCells} cells updated.`);
+      gapi.client.drive.files.get({
+        fileId: sheetId,
+        fields: 'parents'
+      }).then((response) => {
+        const reply = JSON.parse(response.body);
+        console.log(reply['parents'][0])
+        parentId = reply['parents'][0]
+
+        gapi.client.drive.files.update({
+          fileId: sheetId,
+          addParents: folderId,
+          removeParents: parentId,
+        }).then((response) => {
+          console.log(response);
+        });
+      });
+  
+    }).catch((response) => {
+      const reply = JSON.parse(response.body);
+      console.log(reply);
+    });
+
+  }).catch((response) => {
+    //const reply = JSON.parse(response.body);
+    console.log(response);
   });
+  
+  idpQuestions[0].style.display = 'none';
+  idpQuestions[1].style.display = 'none';
+  idpQuestions[2].style.display = 'none';
+  idpQuestions[3].style.display = 'none';
 
-  idpQuestions.style.display = 'none';
   createButton.style.display = 'block';
+  backButton.style.display = 'none';
   submitButton.style.display = 'none';
+  signoutButton.style.display = 'block'
+
+  nameBox.value = '';
+  manEmail.value = '';
+  q1Box.value = '';
+  q2Box.value = '';
+  q3Box.value = '';
+  q4Box.value = '';
+  q5Box.value = '';
+  q6Box.value = '';
+  q7Box.value = '';
+  q8Box.value = '';
+  q9Box.value = '';
+
+  currentPage = 0;
+}
+
+function nextPage() {
+  idpQuestions[currentPage].style.display = 'none';
+  currentPage = currentPage + 1;
+  idpQuestions[currentPage].style.display = 'block';
+
+  if (currentPage > 0) {
+    backButton.style.display = 'block';
+  }
+  if (currentPage === 3) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'block';
+  }
+}
+
+function prevPage() {
+  idpQuestions[currentPage].style.display = 'none';
+  currentPage = currentPage - 1;
+  idpQuestions[currentPage].style.display = 'block';
+
+  if (currentPage === 0) {
+    backButton.style.display = 'none';
+  }
+  if (currentPage < 3) {
+    nextButton.style.display = 'block';
+    submitButton.style.display = 'none';
+  }
 }
 
 /*
