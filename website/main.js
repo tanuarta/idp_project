@@ -1,6 +1,6 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
+var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -119,6 +119,7 @@ function submitForm() {
 
   var nameBox = document.getElementById('name');
   var manEmail = document.getElementById('manEmail');
+  var quarterBox = document.getElementById('quarter');
   var q1Box = document.getElementById('q1');
   var q2Box = document.getElementById('q2');
   var q3Box = document.getElementById('q3');
@@ -131,6 +132,7 @@ function submitForm() {
 
   var name = nameBox.value;
   var mEmail = manEmail.value;
+  var quarter = quarterBox.value;
   var q1 = q1Box.value;
   var q2 = q2Box.value;
   var q3 = q3Box.value;
@@ -140,6 +142,11 @@ function submitForm() {
   var q7 = q7Box.value;
   var q8 = q8Box.value;
   var q9 = q9Box.value;
+
+
+  var body = {
+    name: name + ' IDP' + quarter,
+  }
 
   gapi.client.drive.files.list({
     q: "mimeType='application/vnd.google-apps.folder' and name='IDP'",
@@ -172,7 +179,7 @@ function submitForm() {
 
     gapi.client.sheets.spreadsheets.create({
       properties: {
-        title: name + ' IDP'
+        title: name + ' IDP - ', quarter
       }
     }).then((response) => {
       const reply = JSON.parse(response.body);
