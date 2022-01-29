@@ -14,6 +14,8 @@ var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"
 // included, separated by spaces.
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive";
 
+
+
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var createButton = document.getElementById('create_button');
@@ -27,7 +29,8 @@ const idpQuestions = [
   document.getElementById('idp_questions_0'),
   document.getElementById('idp_questions_1'),
   document.getElementById('idp_questions_2'),
-  document.getElementById('idp_questions_3')
+  document.getElementById('idp_questions_3'),
+  document.getElementById('idp_questions_4')
 ];
 
 var sheetId = 'dummy';
@@ -315,7 +318,7 @@ function nextPage() {
   if (currentPage > 0) {
     backButton.style.display = 'block';
   }
-  if (currentPage === 3) {
+  if (currentPage === 4) {
     nextButton.style.display = 'none';
     submitButton.style.display = 'block';
   }
@@ -329,7 +332,7 @@ function prevPage() {
   if (currentPage === 0) {
     backButton.style.display = 'none';
   }
-  if (currentPage < 3) {
+  if (currentPage < 4) {
     nextButton.style.display = 'block';
     submitButton.style.display = 'none';
   }
@@ -341,6 +344,7 @@ function returnHome() {
   idpQuestions[1].style.display = 'none';
   idpQuestions[2].style.display = 'none';
   idpQuestions[3].style.display = 'none';
+  idpQuestions[4].style.display = 'none';
 
   createButton.style.display = 'block';
   backButton.style.display = 'none';

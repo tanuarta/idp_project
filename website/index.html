@@ -6,15 +6,14 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <header>
-    <h2>IDP Prototype</h2>
+    <h1>IDP Prototype</h1>
+    <img id="logo" src="ntnx-logo.png">
   </header>
   <body>
-    
-
     <div id="home_page">
+      <button class="button" id="create_button" onclick="startIDP()" style="display: none;">Create Sheet</button>
       <button class="button" id="authorize_button" style="display: none;">Authorize</button>
       <button class="button" id="signout_button" style="display: none;">Sign Out</button>
-      <button class="button" id="create_button" onclick="startIDP()" style="display: none;">Create Sheet</button>
     </div>
 
     <div class="idp_questions" id="idp_questions_0" style="display: none">
@@ -22,7 +21,7 @@
       <input type="text" id="name" name="name" style="width: 400px">
       <br>
       <label for="quarter">Select the quarter you are completing this IDP in: </label>
-      <select name="quarter" id="quarter">
+      <select name="quarter" id="quarter" style="width: 200px">
         <option value="Q1">Q1 (Jan-Mar)</option>
         <option value="Q2">Q2 (Apr-Jun)</option>
         <option value="Q3">Q3 (Jul-Sep)</option>
@@ -35,8 +34,12 @@
       <label for="manEmail">Email of Manager:</label>
       <input type="text" id="manEmail" name="manEmail" style="width: 400px">
       <br>
+    </div>
+
+    <div class="idp_questions" id="idp_questions_1" style="display: none">
+      <h3>History and Core Values</h3>
       <label for="q1">Describe your history with Nutanix, and any pertinent prior work experience
-         (including relevant skills you have acquired in these past roles).</label>
+        (including relevant skills you have acquired in these past roles).</label>
       <br>
       <input type="text" id="q1" name="q1">
       <br>
@@ -50,7 +53,7 @@
       <br>
     </div>
 
-    <div class="idp_questions" id="idp_questions_1" style="display: none">
+    <div class="idp_questions" id="idp_questions_2" style="display: none">
       <h3>Motivation</h3>
       <label for="q4">What professional values motivate you?</label>
       <br>
@@ -62,7 +65,7 @@
       <br>
     </div>
 
-    <div class="idp_questions" id="idp_questions_2" style="display: none">
+    <div class="idp_questions" id="idp_questions_3" style="display: none">
       <h3>Strengths/Skills</h3>
       <label for="q6">What are your strongest skills and abilities?</label>
       <br>
@@ -77,7 +80,7 @@
       <br>
     </div>
 
-    <div class="idp_questions" id="idp_questions_3" style="display: none">
+    <div class="idp_questions" id="idp_questions_4" style="display: none">
       <h3>Short/Long Term Goals</h3>
       <label for="q8">What goals do you have for your career over the next two years?</label>
       <br>
@@ -90,12 +93,12 @@
     </div>
 
     <footer>
-      <div id=footer-content>
-        <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
-        <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
-        <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
-        <button class="button" id="cancel_button" onClick="returnHome()"  style="display: none">Cancel</button>
-      </div>
+      <button class="button" id="cancel_button" onClick="returnHome()"  style="display: none">Cancel</button>
+      <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
+      <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
+      <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
+
+
     </footer>
 
     <!--Add buttons to initiate auth sequence and sign out-->
