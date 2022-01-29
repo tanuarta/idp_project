@@ -8,7 +8,11 @@
   <body>
     <h2>IDP Prototype</h2>
 
-    <div id="idp_questions_0" style="display: none">
+    <div id="home_page">
+      
+    </div>
+
+    <div class="idp_questions" id="idp_questions_0" style="display: none">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" style="width: 400px">
       <br>
@@ -38,7 +42,7 @@
       <br>
     </div>
 
-    <div id="idp_questions_1" style="display: none">
+    <div class="idp_questions" id="idp_questions_1" style="display: none">
       <h3>Motivation</h3>
       <label for="q4">What professional values motivate you?</label>
       <br>
@@ -50,7 +54,7 @@
       <br>
     </div>
 
-    <div id="idp_questions_2" style="display: none">
+    <div class="idp_questions" id="idp_questions_2" style="display: none">
       <h3>Strengths/Skills</h3>
       <label for="q6">What are your strongest skills and abilities?</label>
       <br>
@@ -65,7 +69,7 @@
       <br>
     </div>
 
-    <div id="idp_questions_3" style="display: none">
+    <div class="idp_questions" id="idp_questions_3" style="display: none">
       <h3>Short/Long Term Goals</h3>
       <label for="q8">What goals do you have for your career over the next two years?</label>
       <br>
@@ -78,12 +82,12 @@
     </div>
 
     <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize_button" style="display: none;">Authorize</button>
-    <button id="signout_button" style="display: none;">Sign Out</button>
-    <button id="create_button" onclick="createSheet()" style="display: none;">Create Sheet</button>
-    <button id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
-    <button id="next_button" onClick="nextPage()" style="display: none;">Next</button>
-    <button id="back_button" onClick="prevPage()" style="display: none;">Back</button>
+    <button class="button" id="authorize_button" style="display: none;">Authorize</button>
+    <button class="button" id="signout_button" style="display: none;">Sign Out</button>
+    <button class="button" id="create_button" onclick="createSheet()" style="display: none;">Create Sheet</button>
+    <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
+    <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
+    <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
 
     <script type="text/javascript" src='main.js'></script>
 

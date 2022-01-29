@@ -16,6 +16,7 @@ var submitButton = document.getElementById('submit_form');
 var nextButton = document.getElementById('next_button');
 var backButton = document.getElementById('back_button');
 
+const homePage = document.getElementById('home_page');
 const idpQuestions = [
   document.getElementById('idp_questions_0'),
   document.getElementById('idp_questions_1'),
@@ -108,7 +109,7 @@ function appendPre(message) {
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
 
-function createSheet() {
+function Sheet() {
   idpQuestions[currentPage].style.display = 'block';
   createButton.style.display = 'none';
   nextButton.style.display = 'block';
