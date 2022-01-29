@@ -1,7 +1,57 @@
+header {
+    height: 100px;
+    text-align: center;
+}
+
 input {
-    height: 20px;
+    height: 5rem;
     width: 400px;
     font-size: 12px;
+}
+
+#home_page {
+    display: flex;
+    background-color: blueviolet;
+    width: 100%;
+    height: 100%;
+    justify-items: center;
+    align-content: center;
+}
+
+.idp_questions {
+    flex-direction: column;
+
+}
+
+.button {
+    width: 150px;
+    height: 50px;
+    background-color: rgba(68,188,152,255);
+    margin: 40px;
+    padding: 15px;
+    text-align: center;
+    border: none;
+    border-radius: 10px;
+}
+
+.button:hover {
+    background-color: rgba(80,230,185,255);
+    box-shadow: 0 50px 150px rgba(117, 230, 228, .4);
+}
+
+body {
+}
+
+footer {
+    display: sticky;
+    height: 200px;
+}
+
+#footer-content {
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    padding: 0.5rem;
 }
 
 

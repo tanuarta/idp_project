@@ -5,11 +5,16 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="styles.css">
   </head>
-  <body>
+  <header>
     <h2>IDP Prototype</h2>
+  </header>
+  <body>
+    
 
     <div id="home_page">
-      
+      <button class="button" id="authorize_button" style="display: none;">Authorize</button>
+      <button class="button" id="signout_button" style="display: none;">Sign Out</button>
+      <button class="button" id="create_button" onclick="startIDP()" style="display: none;">Create Sheet</button>
     </div>
 
     <div class="idp_questions" id="idp_questions_0" style="display: none">
@@ -84,13 +89,18 @@
       <br>
     </div>
 
+    <footer>
+      <div id=footer-content>
+        <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
+        <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
+        <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
+        <button class="button" id="cancel_button" onClick="returnHome()"  style="display: none">Cancel</button>
+      </div>
+    </footer>
+
     <!--Add buttons to initiate auth sequence and sign out-->
-    <button class="button" id="authorize_button" style="display: none;">Authorize</button>
-    <button class="button" id="signout_button" style="display: none;">Sign Out</button>
-    <button class="button" id="create_button" onclick="createSheet()" style="display: none;">Create Sheet</button>
-    <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
-    <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
-    <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
+
+
 
     <script type="text/javascript" src='main.js'></script>
 

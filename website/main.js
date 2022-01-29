@@ -1,6 +1,11 @@
 // Client ID and API key from the Developer Console
-var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
+// ROAN
+// var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
+// var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
+
+// ANIRUDH
+var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -15,6 +20,7 @@ var createButton = document.getElementById('create_button');
 var submitButton = document.getElementById('submit_form');
 var nextButton = document.getElementById('next_button');
 var backButton = document.getElementById('back_button');
+var cancelButton = document.getElementById('cancel_button');
 
 const homePage = document.getElementById('home_page');
 const idpQuestions = [
@@ -109,11 +115,13 @@ function appendPre(message) {
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
 
-function Sheet() {
-  idpQuestions[currentPage].style.display = 'block';
+function startIDP() {
+  idpQuestions[currentPage].style.display = 'flex';
+  homePage.style.display = 'none';
   createButton.style.display = 'none';
   nextButton.style.display = 'block';
   signoutButton.style.display= 'none';
+  cancelButton.style.display='block';
 }
 
 function submitForm() {
@@ -295,6 +303,40 @@ function submitForm() {
     console.log(response);
   });
   
+  returnHome();
+
+}
+
+function nextPage() {
+  idpQuestions[currentPage].style.display = 'none';
+  currentPage = currentPage + 1;
+  idpQuestions[currentPage].style.display = 'flex';
+
+  if (currentPage > 0) {
+    backButton.style.display = 'block';
+  }
+  if (currentPage === 3) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'block';
+  }
+}
+
+function prevPage() {
+  idpQuestions[currentPage].style.display = 'none';
+  currentPage = currentPage - 1;
+  idpQuestions[currentPage].style.display = 'flex';
+
+  if (currentPage === 0) {
+    backButton.style.display = 'none';
+  }
+  if (currentPage < 3) {
+    nextButton.style.display = 'block';
+    submitButton.style.display = 'none';
+  }
+}
+
+function returnHome() {
+  homePage.style.display = 'flex';
   idpQuestions[0].style.display = 'none';
   idpQuestions[1].style.display = 'none';
   idpQuestions[2].style.display = 'none';
@@ -302,8 +344,10 @@ function submitForm() {
 
   createButton.style.display = 'block';
   backButton.style.display = 'none';
+  nextButton.style.display = 'none';
   submitButton.style.display = 'none';
   signoutButton.style.display = 'block'
+  cancelButton.style.display = 'none';
 
   nameBox.value = '';
   manEmail.value = '';
@@ -318,34 +362,6 @@ function submitForm() {
   q9Box.value = '';
 
   currentPage = 0;
-}
-
-function nextPage() {
-  idpQuestions[currentPage].style.display = 'none';
-  currentPage = currentPage + 1;
-  idpQuestions[currentPage].style.display = 'block';
-
-  if (currentPage > 0) {
-    backButton.style.display = 'block';
-  }
-  if (currentPage === 3) {
-    nextButton.style.display = 'none';
-    submitButton.style.display = 'block';
-  }
-}
-
-function prevPage() {
-  idpQuestions[currentPage].style.display = 'none';
-  currentPage = currentPage - 1;
-  idpQuestions[currentPage].style.display = 'block';
-
-  if (currentPage === 0) {
-    backButton.style.display = 'none';
-  }
-  if (currentPage < 3) {
-    nextButton.style.display = 'block';
-    submitButton.style.display = 'none';
-  }
 }
 
 /*
