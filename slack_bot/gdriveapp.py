@@ -1,6 +1,9 @@
 from __future__ import print_function
 
 import os.path
+from dateutil.parser import parse
+from dateutil.relativedelta import relativedelta
+from datetime import date
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -8,7 +11,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
-from slackapp import message
+from slackapp import *
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/drive']
@@ -43,6 +46,7 @@ def gdrive():
         pageSize=10,
         q=query,
         fields='nextPageToken, files(id, name)').execute()
+
       print(response['files'][0]['id'])
 
       folder_id = response['files'][0]['id']
@@ -51,35 +55,49 @@ def gdrive():
       # Call the Drive v3 API
       results = service.files().list(
         pageSize=10, 
-        fields="nextPageToken, files(id, name)",
+        fields="nextPageToken, files(id, name, modifiedTime, permissions)",
         q=query,
         ).execute()
+      #print(results)
       items = results.get('files', [])
-      print(items)
+      #print(items)
 
       if not items:
         print('No files found.')
         return
 
-      fileArray = []
-
       for item in items:
-        fileArray.append(item['name'])
+        #print(item)
+        modTime = item['modifiedTime']
+        name = item['name']
+        fileId = item['id']
+        permissionArray = item['permissions']
+        #print(permissionArray)
 
-      with open('infile.txt', 'r+') as f:
-        lines = f.read().splitlines()
-        print(lines)
-        for file in fileArray:
-          if file not in lines:
-            print('New file detected')
-            message('You\'ve created a new file ' + file)
-            f.write('\n' + file)
-      return
-      
+        for permission in permissionArray:
+          if permission['role'] == 'writer':
+            print(permission['emailAddress'])
 
-      print('Files:')
-      for item in items:
-        print(u'{0} ({1})'.format(item['name'], item['id']))
+        modDateTime = parse(modTime).replace(tzinfo=None)
+
+        modDate = modDateTime.date()
+        todayDate = date.today()
+
+        three_months = modDate + relativedelta(months=+3)
+
+        print(three_months)
+
+        # CHANGE THIS TO BE >= INSTEAD OF <=
+        if todayDate <= three_months:
+          # Send message
+          print('pog')
+          for permission in permissionArray:
+            if permission['role'] == 'writer':
+              print(permission['emailAddress'])
+              ropeEmail = permission['emailAddress']
+              #print('returning')
+              slackMessage('Please review ' + name, ropeEmail)
+        
         
     except HttpError as error:
       # TODO(developer) - Handle errors from drive API.

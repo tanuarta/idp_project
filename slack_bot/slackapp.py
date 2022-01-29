@@ -2,15 +2,17 @@ import logging
 logging.basicConfig(level=logging.DEBUG)
 
 import os
+import bot_token
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
-slack_token = os.environ["SLACK_BOT_TOKEN"]
-client = WebClient(token=slack_token)
+def slackMessage(text, ropemail):
+  print('hey')
+  slack_token = bot_token.token
+  client = WebClient(token=slack_token)
 
-def message(text):
   userInfo = client.users_lookupByEmail(
-    email='roan.tanuarta@nutanix.com'
+    email=ropemail
   )
   print(userInfo['user']['id'])
 
