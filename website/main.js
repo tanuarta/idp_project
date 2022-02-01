@@ -226,9 +226,9 @@ function submitForm() {
         console.log(`${result.updatedCells} cells updated.`);
       });
     
-      console.log(name);
-      console.log(q1);
-      console.log(q2);
+      // console.log(name);
+      // console.log(q1);
+      // console.log(q2);
       
       values = [
         [
@@ -339,12 +339,28 @@ function prevPage() {
 }
 
 function returnHome() {
+  var nameBox = document.getElementById('name');
+  var manEmail = document.getElementById('manEmail');
+  var engEmail = document.getElementById('engEmail');
+  var quarterBox = document.getElementById('quarter');
+  var q1Box = document.getElementById('q1');
+  var q2Box = document.getElementById('q2');
+  var q3Box = document.getElementById('q3');
+  var q4Box = document.getElementById('q4');
+  var q5Box = document.getElementById('q5');
+  var q6Box = document.getElementById('q6');
+  var q7Box = document.getElementById('q7');
+  var q8Box = document.getElementById('q8');
+  var q9Box = document.getElementById('q9');
+
   homePage.style.display = 'flex';
   idpQuestions[0].style.display = 'none';
   idpQuestions[1].style.display = 'none';
   idpQuestions[2].style.display = 'none';
   idpQuestions[3].style.display = 'none';
   idpQuestions[4].style.display = 'none';
+
+  currentPage = 0;
 
   createButton.style.display = 'block';
   backButton.style.display = 'none';
@@ -365,7 +381,6 @@ function returnHome() {
   q8Box.value = '';
   q9Box.value = '';
 
-  currentPage = 0;
 }
 
 /*
