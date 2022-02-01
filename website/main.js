@@ -1,11 +1,11 @@
 // Client ID and API key from the Developer Console
 // ROAN
-// var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
-// var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
+var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
 
 // ANIRUDH
-var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
+// var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
+// var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -118,7 +118,7 @@ function appendPre(message) {
  * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
  */
 
-function startIDP() {
+function startIDP() {  
   idpQuestions[currentPage].style.display = 'flex';
   homePage.style.display = 'none';
   createButton.style.display = 'none';
@@ -186,61 +186,32 @@ function submitForm() {
       folderId = fileArray[0]['id'];
     }
 
-    gapi.client.sheets.spreadsheets.create({
-      properties: {
-        title: name + ' IDP - ' + quarter
-      }
+    gapi.client.drive.files.copy({
+      fileId: '15e75Wl-79fk7AcwGNTcpKFBNLF2SUNE_SULk211WZas',
+      name: 'Roan' + ' IDP - ' + 'Q2'
     }).then((response) => {
       const reply = JSON.parse(response.body);
-      console.log(reply.spreadsheetId);
+      console.log(reply['id'])
+      sheetId = reply['id'];
       
-      sheetId = reply.spreadsheetId;
-  
       var values = [
-      [
-        'Name', 
-        'Describe your history with Nutanix, and any pertinent prior work experience (including relevant skills you have acquired in these past roles).', 
-        'What Nutanix core values do you most strongly demonstrate?',
-        'What Nutanix core values do you feel you need to demonstrate more effectively?',
-        'What professional values motivate you?',
-        'What is most important to you in your career?',
-        'What are your strongest skills and abilities?',
-        'What are some areas you would like to improve upon?',
-        'What goals do you have for your career over the next two years?',
-        'What goals do you have for your career beyond two years?',
-  
-      ]];
-      
+        [q1], 
+        [q2], 
+        [q3], 
+        [q4], 
+        [q5], 
+        [q6], 
+        [q7], 
+        [q8], 
+        [q9]
+      ];
       var body = {
         values: values
       };
   
       gapi.client.sheets.spreadsheets.values.update({
         spreadsheetId: sheetId,
-        range: 'Sheet1!A1:K1',
-        valueInputOption: 'RAW',
-        resource: body
-      }).then((response) => {
-        var result = response.result;
-        console.log(`${result.updatedCells} cells updated.`);
-      });
-    
-      // console.log(name);
-      // console.log(q1);
-      // console.log(q2);
-      
-      values = [
-        [
-          name, q1, q2, q3, q4, q5, q6, q7, q8, q9
-        ]];
-  
-      body = {
-        values: values
-      };
-  
-      gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: sheetId,
-        range: 'Sheet1!A2:K2',
+        range: 'Sheet1!C4:C12',
         valueInputOption: 'RAW',
         resource: body
       }).then((response) => {
