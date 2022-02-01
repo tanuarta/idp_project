@@ -128,7 +128,6 @@ function startIDP() {
 }
 
 function submitForm() {
-
   var nameBox = document.getElementById('name');
   var manEmail = document.getElementById('manEmail');
   var engEmail = document.getElementById('engEmail');

@@ -32,11 +32,6 @@ header {
     left: 0;
 }
 
-input {
-    width: 400px;
-    font-size: 12px;
-}
-
 #home_page {
     display: flex;
     flex-direction: column;
@@ -46,8 +41,15 @@ input {
 }
 
 .idp_questions {
-    margin: 10px;    
+    margin: 10px;
+    height: 100%;
     flex-direction: column;
+}
+
+.idp_questions input {
+    width: 70%;
+    height: 30%;
+    font-size: 12px;
 }
 
 .idp_questions a, a:link {
@@ -62,11 +64,17 @@ input {
     color: var(--link-hover);
 }
 
+#idp_questions_0, #idp_questions_1 {
+    width: 50%;
+}
+
 #idp_questions_2, #idp_questions_3, #idp_questions_4 {
     flex-direction: row;
 }
 
 .container {
+    width: 50%;
+    margin: 0.5vw;
     flex-direction: column;
 }
 
