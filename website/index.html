@@ -4,6 +4,8 @@
     <title>IDP Prototype</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/x-icon" href="ntnx-logo.png">
   </head>
   <header>
     <h1 id="title">IDP Prototype</h1>
@@ -16,12 +18,12 @@
       <button class="button" id="signout_button" style="display: none;">Sign Out</button>
     </div>
 
-    <div class="idp_questions" id="idp_questions_0" style="display: none">
+    <form class="idp_questions" id="idp_questions_0" style="display: none">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required>
       <br>
       <label for="quarter">Select the quarter you are completing this IDP in: </label>
-      <select name="quarter" id="quarter" style="width: 200px">
+      <select name="quarter" id="quarter" style="width: 200px" required>
         <option value="Q1">Q1 (Jan-Mar)</option>
         <option value="Q2">Q2 (Apr-Jun)</option>
         <option value="Q3">Q3 (Jul-Sep)</option>
@@ -29,11 +31,11 @@
       </select>
       <br>
       <label for="engEmail">Your email:</label>
-      <input type="text" id="engEmail" name="engEmail">
+      <input type="text" id="engEmail" name="engEmail" required>
       <br>
       <label for="manEmail">Email of Manager:</label>
-      <input type="text" id="manEmail" name="manEmail">
-    </div>
+      <input type="text" id="manEmail" name="manEmail" required>
+    </form>
 
     <div class="idp_questions" id="idp_questions_1" style="display: none">
       <h3>History and Core Values</h3>
@@ -156,13 +158,13 @@
       </div>
     </div>
 
+    <div id="snackbar"></div>
+
     <footer>
       <button class="button" id="cancel_button" onClick="returnHome()"  style="display: none">Cancel</button>
       <button class="button" id="back_button" onClick="prevPage()" style="display: none;">Back</button>
       <button class="button" id="submit_form" onClick="submitForm()" style="display: none;">Submit</button>
       <button class="button" id="next_button" onClick="nextPage()" style="display: none;">Next</button>
-
-
     </footer>
 
     <!--Add buttons to initiate auth sequence and sign out-->

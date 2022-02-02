@@ -24,6 +24,14 @@ var nextButton = document.getElementById('next_button');
 var backButton = document.getElementById('back_button');
 var cancelButton = document.getElementById('cancel_button');
 
+var questions = [
+  ['name','quarter','engEmail','manEmail'],
+  ['q1','q2', 'q3'],
+  ['q4','q5'],
+  ['q6','q7'],
+  ['q8','q9']
+]
+
 const homePage = document.getElementById('home_page');
 const idpQuestions = [
   document.getElementById('idp_questions_0'),
@@ -146,7 +154,7 @@ function submitForm() {
   var mEmail = manEmail.value;
   var eEmail = engEmail.value;
   var quarter = quarterBox.value;
-  console.log(quarter)
+  // console.log(quarter)
   var q1 = q1Box.value;
   var q2 = q2Box.value;
   var q3 = q3Box.value;
@@ -310,17 +318,29 @@ function submitForm() {
 }
 
 function nextPage() {
-  idpQuestions[currentPage].style.display = 'none';
-  currentPage = currentPage + 1;
-  idpQuestions[currentPage].style.display = 'flex';
+  var validInput = true;
+  for(var i=0; i < questions[currentPage].length; i++) {
+    if(!document.getElementById(questions[currentPage][i]).validity.valid) {
+      validInput = false;
+    }
+  }
 
-  if (currentPage > 0) {
-    backButton.style.display = 'block';
+  if(validInput) {
+    idpQuestions[currentPage].style.display = 'none';
+    currentPage = currentPage + 1;
+    idpQuestions[currentPage].style.display = 'flex';
+  
+    if (currentPage > 0) {
+      backButton.style.display = 'block';
+    }
+    if (currentPage === 4) {
+      nextButton.style.display = 'none';
+      submitButton.style.display = 'block';
+    }
+  } else {
+    showSnackbar("invalid_input")
   }
-  if (currentPage === 4) {
-    nextButton.style.display = 'none';
-    submitButton.style.display = 'block';
-  }
+
 }
 
 function prevPage() {
@@ -370,6 +390,7 @@ function returnHome() {
 
   nameBox.value = '';
   manEmail.value = '';
+  engEmail.value = ''
   q1Box.value = '';
   q2Box.value = '';
   q3Box.value = '';
@@ -380,6 +401,26 @@ function returnHome() {
   q8Box.value = '';
   q9Box.value = '';
 
+}
+
+function showSnackbar(type) {
+  var snacbkar = document.getElementById("snackbar")
+  if(type === "invalid_input") {
+    snacbkar.innerHTML = "<i class="+"material-icons"+">error</i>"
+    +"<p>"+"Please fill in all fields."+"</p>"
+  } else if(type === "submission_success") {
+    snacbkar.innerHTML = "<i class="+"material-icons"+">check</i>"
+    +"<p>"+"IDP successfully submitted!"+"</p>"
+  } else if(type === "submission_error") {
+    snacbkar.innerHTML = "<i class="+"material-icons"+">error</i>"
+    +"<p>"+"Error submitting IDP."+"</p>"
+  } else {
+    snacbkar.innerHTML = "Invalid type."
+  }
+
+  snacbkar.className = "show"
+
+  setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
 }
 
 /*

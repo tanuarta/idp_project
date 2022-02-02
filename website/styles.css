@@ -19,6 +19,7 @@ header {
     align-items: center;
     text-align: right;
     border-bottom: 5px solid var(--secondary);
+    z-index: 2;
 }
 
 #title {
@@ -102,6 +103,57 @@ body {
     margin: 0;
     color: white;
     background-color: var(--primary);
+}
+
+#snackbar{
+    visibility: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-width: 16vw;
+    margin-left: -8vw;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 16px;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 20vh;
+    height: 5vh;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  }
+  
+  /* Animations to fade the snackbar in and out */
+  @-webkit-keyframes fadein {
+    from {top: 15vh; opacity: 0;}
+    to {top: 20vh; opacity: 1;}
+  }
+  
+  @keyframes fadein {
+    from {top: 15vh; opacity: 0;}
+    to {top: 20vh; opacity: 1;}
+  }
+  
+  @-webkit-keyframes fadeout {
+    from {top: 20vh; opacity: 1;}
+    to {top: 15vh; opacity: 0;}
+  }
+  
+  @keyframes fadeout {
+    from {top: 20vh; opacity: 1;}
+    to {top: 15vh; opacity: 0;}
+  }
+
+.material-icons {
+    padding-right: 1vw;
 }
 
 footer {
