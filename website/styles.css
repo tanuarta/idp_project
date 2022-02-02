@@ -7,7 +7,11 @@
     --secondary: rgb(176,201,84);
     --link-hover: rgb(75, 213, 223);
     --button-hover: rgb(210, 243, 93);
-  }
+}
+
+textarea {
+    resize: vertical;
+}
 
 header {
     background-color: white;
@@ -112,7 +116,6 @@ body {
     justify-content: center;
     align-items: center;
     min-width: 16vw;
-    margin-left: -8vw;
     background-color: #333;
     color: #fff;
     text-align: center;
@@ -120,8 +123,8 @@ body {
     padding: 16px;
     position: absolute;
     z-index: 1;
-    left: 50%;
     top: 20vh;
+    right: 3vw;
     height: 5vh;
 }
 
@@ -133,23 +136,23 @@ body {
   
   /* Animations to fade the snackbar in and out */
   @-webkit-keyframes fadein {
-    from {top: 15vh; opacity: 0;}
-    to {top: 20vh; opacity: 1;}
+    from {top: 20vh; right: 0; opacity: 0;}
+    to {top: 20vh; right: 3vw; opacity: 1;}
   }
   
   @keyframes fadein {
-    from {top: 15vh; opacity: 0;}
-    to {top: 20vh; opacity: 1;}
+    from {top: 20vh; right: 0; opacity: 0;}
+    to {top: 20vh; right: 3vw; opacity: 1;}
   }
   
   @-webkit-keyframes fadeout {
-    from {top: 20vh; opacity: 1;}
-    to {top: 15vh; opacity: 0;}
+    from {top: 20vh; right: 3vw; opacity: 1;}
+    to {top: 20vh; right: 0; opacity: 0;}
   }
   
   @keyframes fadeout {
-    from {top: 20vh; opacity: 1;}
-    to {top: 15vh; opacity: 0;}
+    from {top: 20vh; right: 3vw; opacity: 1;}
+    to {top: 20vh; right: 0; opacity: 0;}
   }
 
 .material-icons {

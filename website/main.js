@@ -1,11 +1,11 @@
 // Client ID and API key from the Developer Console
 // ROAN
-var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
+// var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
+// var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
 
 // ANIRUDH
-// var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
-// var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
+var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -13,7 +13,6 @@ var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"
 // Authorization scopes required by the API; multiple scopes can be
 // included, separated by spaces.
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive";
-
 
 
 var authorizeButton = document.getElementById('authorize_button');
@@ -136,163 +135,182 @@ function startIDP() {
 }
 
 function submitForm() {
-  var nameBox = document.getElementById('name');
-  var manEmail = document.getElementById('manEmail');
-  var engEmail = document.getElementById('engEmail');
-  var quarterBox = document.getElementById('quarter');
-  var q1Box = document.getElementById('q1');
-  var q2Box = document.getElementById('q2');
-  var q3Box = document.getElementById('q3');
-  var q4Box = document.getElementById('q4');
-  var q5Box = document.getElementById('q5');
-  var q6Box = document.getElementById('q6');
-  var q7Box = document.getElementById('q7');
-  var q8Box = document.getElementById('q8');
-  var q9Box = document.getElementById('q9');
+  var validInput = true;
+  for(var i=0; i < questions[currentPage].length; i++) {
+    var temp = document.getElementById(questions[currentPage][i])
+    if(!temp.validity.valid) {
+      validInput = false;
+      temp.style.border = "2px solid rgba(255,0,0,0.7)";
+    } else {
+      temp.style.border = "none";
+    }
+  }
 
-  var name = nameBox.value;
-  var mEmail = manEmail.value;
-  var eEmail = engEmail.value;
-  var quarter = quarterBox.value;
-  // console.log(quarter)
-  var q1 = q1Box.value;
-  var q2 = q2Box.value;
-  var q3 = q3Box.value;
-  var q4 = q4Box.value;
-  var q5 = q5Box.value;
-  var q6 = q6Box.value;
-  var q7 = q7Box.value;
-  var q8 = q8Box.value;
-  var q9 = q9Box.value;
-
-  gapi.client.drive.files.list({
-    q: "mimeType='application/vnd.google-apps.folder' and name='IDP'",
-    spaces: 'drive',
-    fields: 'nextPageToken, files(id, name)'
-  }).then((response) => {
-    const reply = JSON.parse(response.body);
-    const fileArray = reply['files']
-
-    if (fileArray.length === 0) {
-      console.log('asdasd')
-      body = {
-        mimeType : 'application/vnd.google-apps.folder',
-        name : 'IDP'
+  if(validInput) {
+    var nameBox = document.getElementById('name');
+    var manEmail = document.getElementById('manEmail');
+    var engEmail = document.getElementById('engEmail');
+    var quarterBox = document.getElementById('quarter');
+    var q1Box = document.getElementById('q1');
+    var q2Box = document.getElementById('q2');
+    var q3Box = document.getElementById('q3');
+    var q4Box = document.getElementById('q4');
+    var q5Box = document.getElementById('q5');
+    var q6Box = document.getElementById('q6');
+    var q7Box = document.getElementById('q7');
+    var q8Box = document.getElementById('q8');
+    var q9Box = document.getElementById('q9');
+  
+    var name = nameBox.value;
+    var mEmail = manEmail.value;
+    var eEmail = engEmail.value;
+    var quarter = quarterBox.value;
+    // console.log(quarter)
+    var q1 = q1Box.value;
+    var q2 = q2Box.value;
+    var q3 = q3Box.value;
+    var q4 = q4Box.value;
+    var q5 = q5Box.value;
+    var q6 = q6Box.value;
+    var q7 = q7Box.value;
+    var q8 = q8Box.value;
+    var q9 = q9Box.value;
+  
+    gapi.client.drive.files.list({
+      q: "mimeType='application/vnd.google-apps.folder' and name='IDP'",
+      spaces: 'drive',
+      fields: 'nextPageToken, files(id, name)'
+    }).then((response) => {
+      const reply = JSON.parse(response.body);
+      const fileArray = reply['files']
+  
+      if (fileArray.length === 0) {
+        console.log('asdasd')
+        body = {
+          mimeType : 'application/vnd.google-apps.folder',
+          name : 'IDP'
+        }
+  
+        gapi.client.drive.files.create({
+          resource: body
+        }).then((response) => {
+          const reply = JSON.parse(response.body);
+          console.log(reply['id'])
+          folderId = reply['id']
+        }).catch((response) => {
+          console.log(response);
+        })
+      } else {
+        console.log(fileArray);
+        folderId = fileArray[0]['id'];
       }
-
-      gapi.client.drive.files.create({
-        resource: body
+  
+      gapi.client.drive.files.copy({
+        fileId: '15e75Wl-79fk7AcwGNTcpKFBNLF2SUNE_SULk211WZas',
+        name: 'Roan' + ' IDP - ' + 'Q2'
       }).then((response) => {
         const reply = JSON.parse(response.body);
         console.log(reply['id'])
-        folderId = reply['id']
-      }).catch((response) => {
-        console.log(response);
-      })
-    } else {
-      console.log(fileArray);
-      folderId = fileArray[0]['id'];
-    }
-
-    gapi.client.drive.files.copy({
-      fileId: '15e75Wl-79fk7AcwGNTcpKFBNLF2SUNE_SULk211WZas',
-      name: 'Roan' + ' IDP - ' + 'Q2'
-    }).then((response) => {
-      const reply = JSON.parse(response.body);
-      console.log(reply['id'])
-      sheetId = reply['id'];
-      
-      var values = [
-        [q1], 
-        [q2], 
-        [q3], 
-        [q4], 
-        [q5], 
-        [q6], 
-        [q7], 
-        [q8], 
-        [q9]
-      ];
-      var body = {
-        values: values
-      };
-  
-      gapi.client.sheets.spreadsheets.values.update({
-        spreadsheetId: sheetId,
-        range: 'Sheet1!C4:C12',
-        valueInputOption: 'RAW',
-        resource: body
-      }).then((response) => {
-        var result = response.result;
-        console.log(`${result.updatedCells} cells updated.`);
-      });
-  
-      body = {
-        role: 'writer',
-        type: 'user',
-        emailAddress: mEmail,
-      }
-  
-      gapi.client.drive.permissions.create({
-        fileId: sheetId,
-        resource: body,
-      }).then((response) => {
-        var result = response.result;
-        console.log(result)
-        console.log(`Manager Permission Changed`);
-      });
-
-      body = {
-        role: 'writer',
-        type: 'user',
-        emailAddress: eEmail,
-      }
-  
-      gapi.client.drive.permissions.create({
-        fileId: sheetId,
-        resource: body,
-      }).then((response) => {
-        var result = response.result;
-        console.log(result)
-        console.log(`Engineer Permission Changed`);
-      });
-
-      gapi.client.drive.files.get({
-        fileId: sheetId,
-        fields: 'parents'
-      }).then((response) => {
-        const reply = JSON.parse(response.body);
-        console.log(reply['parents'][0])
-        parentId = reply['parents'][0]
-
-        gapi.client.drive.files.update({
-          fileId: sheetId,
-          addParents: folderId,
-          removeParents: parentId,
+        sheetId = reply['id'];
+        
+        var values = [
+          [q1], 
+          [q2], 
+          [q3], 
+          [q4], 
+          [q5], 
+          [q6], 
+          [q7], 
+          [q8], 
+          [q9]
+        ];
+        var body = {
+          values: values
+        };
+    
+        gapi.client.sheets.spreadsheets.values.update({
+          spreadsheetId: sheetId,
+          range: 'Sheet1!C4:C12',
+          valueInputOption: 'RAW',
+          resource: body
         }).then((response) => {
-          console.log(response);
+          var result = response.result;
+          console.log(`${result.updatedCells} cells updated.`);
         });
+    
+        body = {
+          role: 'writer',
+          type: 'user',
+          emailAddress: mEmail,
+        }
+    
+        gapi.client.drive.permissions.create({
+          fileId: sheetId,
+          resource: body,
+        }).then((response) => {
+          var result = response.result;
+          console.log(result)
+          console.log(`Manager Permission Changed`);
+        });
+  
+        body = {
+          role: 'writer',
+          type: 'user',
+          emailAddress: eEmail,
+        }
+    
+        gapi.client.drive.permissions.create({
+          fileId: sheetId,
+          resource: body,
+        }).then((response) => {
+          var result = response.result;
+          console.log(result)
+          console.log(`Engineer Permission Changed`);
+        });
+  
+        gapi.client.drive.files.get({
+          fileId: sheetId,
+          fields: 'parents'
+        }).then((response) => {
+          const reply = JSON.parse(response.body);
+          console.log(reply['parents'][0])
+          parentId = reply['parents'][0]
+  
+          gapi.client.drive.files.update({
+            fileId: sheetId,
+            addParents: folderId,
+            removeParents: parentId,
+          }).then((response) => {
+            console.log(response);
+          });
+        });
+    
+      }).catch((response) => {
+        const reply = JSON.parse(response.body);
+        console.log(reply);
       });
   
     }).catch((response) => {
-      const reply = JSON.parse(response.body);
-      console.log(reply);
+      //const reply = JSON.parse(response.body);
+      console.log(response);
     });
-
-  }).catch((response) => {
-    //const reply = JSON.parse(response.body);
-    console.log(response);
-  });
-  
-  returnHome();
+    returnHome();
+    showSnackbar("submission_success");
+  } else {
+    showSnackbar("invalid_input");
+  }
 
 }
 
 function nextPage() {
   var validInput = true;
   for(var i=0; i < questions[currentPage].length; i++) {
-    if(!document.getElementById(questions[currentPage][i]).validity.valid) {
+    var temp = document.getElementById(questions[currentPage][i])
+    if(!temp.validity.valid) {
       validInput = false;
+      temp.style.border = "2px solid rgba(255,0,0,0.7)";
+    } else {
+      temp.style.border = "none";
     }
   }
 
@@ -371,6 +389,19 @@ function returnHome() {
   q7Box.value = '';
   q8Box.value = '';
   q9Box.value = '';
+
+  nameBox.style.border = 'none';
+  manEmail.style.border = 'none';
+  engEmail.style.border = 'none';
+  q1Box.style.border = 'none';
+  q2Box.style.border = 'none';
+  q3Box.style.border = 'none';
+  q4Box.style.border = 'none';
+  q5Box.style.border = 'none';
+  q6Box.style.border = 'none';
+  q7Box.style.border = 'none';
+  q8Box.style.border = 'none';
+  q9Box.style.border = 'none';
 
 }
 
