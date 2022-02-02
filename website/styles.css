@@ -102,8 +102,8 @@ header {
 body {
     position: relative;
     height: 100%;
-    min-height: 85vh;
-    padding-bottom: 15vh;
+    min-height: 90vh;
+    padding-bottom: 10vh;
     margin: 0;
     color: white;
     background-color: var(--primary);
@@ -166,7 +166,7 @@ footer {
     position: absolute;
     bottom: 0;
     margin: 0;
-    height: 15vh;
+    height: 10vh;
     width: 100%;
     flex-direction: row;
     background-color: white;
