@@ -1,11 +1,7 @@
 // Client ID and API key from the Developer Console
 // ROAN
-// var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
-// var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
-
-// ANIRUDH
-var CLIENT_ID = '236325179574-qqumbqmr27pna7hn9mgkehtd8l2pat1v.apps.googleusercontent.com';
-var API_KEY = 'AIzaSyD0sSVvLdT7wtJ-mIk6vGO5FmQAdMInI5s';
+var CLIENT_ID = '675470811033-sibo04brkmpilumo090ng24fjs2kv9r8.apps.googleusercontent.com';
+var API_KEY = 'AIzaSyCDSI4swYkCMKH86woOwgF7jR7rZh5_4tc';
 
 // Array of API discovery doc URLs for APIs used by the quickstart
 var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4", "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
@@ -206,8 +202,8 @@ function submitForm() {
       }
   
       gapi.client.drive.files.copy({
-        fileId: '15e75Wl-79fk7AcwGNTcpKFBNLF2SUNE_SULk211WZas',
-        name: 'Roan' + ' IDP - ' + 'Q2'
+        fileId: '1YfV5W-nUbeLzFJfR9IIOm48NdfJQwcildzyAXL74hI0',
+        name: name + ' IDP - ' + quarter
       }).then((response) => {
         const reply = JSON.parse(response.body);
         console.log(reply['id'])
@@ -424,26 +420,3 @@ function showSnackbar(type) {
 
   setTimeout(function(){ snackbar.className = snackbar.className.replace("show", ""); }, 3000);
 }
-
-/*
-function listMajors() {
-  gapi.client.sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
-  }).then(function(response) {
-    var range = response.result;
-    if (range.values.length > 0) {
-      appendPre('Name, Major:');
-      for (i = 0; i < range.values.length; i++) {
-        var row = range.values[i];
-        // Print columns A and E, which correspond to indices 0 and 4.
-        appendPre(row[0] + ', ' + row[4]);
-      }
-    } else {
-      appendPre('No data found.');
-    }
-  }, function(response) {
-    appendPre('Error: ' + response.result.error.message);
-  });
-}
-*/
