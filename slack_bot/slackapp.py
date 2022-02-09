@@ -7,7 +7,6 @@ from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 
 def slackMessage(text, ropemail):
-  print('hey')
   slack_token = bot_token.token
   client = WebClient(token=slack_token)
 

@@ -10,7 +10,6 @@ var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"
 // included, separated by spaces.
 var SCOPES = "https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/drive";
 
-
 var authorizeButton = document.getElementById('authorize_button');
 var signoutButton = document.getElementById('signout_button');
 var createButton = document.getElementById('create_button');
@@ -202,7 +201,7 @@ function submitForm() {
       }
   
       gapi.client.drive.files.copy({
-        fileId: '1YfV5W-nUbeLzFJfR9IIOm48NdfJQwcildzyAXL74hI0',
+        fileId: '153jz6GOeZpGTF9qlWjrB8Of_k1G1RBC2qRRg4a4fNU0',
         name: name + ' IDP - ' + quarter
       }).then((response) => {
         const reply = JSON.parse(response.body);

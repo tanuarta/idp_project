@@ -55,10 +55,10 @@ def gdrive():
       # Call the Drive v3 API
       results = service.files().list(
         pageSize=10, 
-        fields="nextPageToken, files(id, name, modifiedTime, permissions)",
+        fields="nextPageToken, files(id, name, modifiedTime, permissions, webViewLink)",
         q=query,
         ).execute()
-      #print(results)
+      print(results)
       items = results.get('files', [])
       #print(items)
 
@@ -67,16 +67,14 @@ def gdrive():
         return
 
       for item in items:
-        #print(item)
+        print(item)
+        
         modTime = item['modifiedTime']
         name = item['name']
         fileId = item['id']
+        link = item['webViewLink']
         permissionArray = item['permissions']
-        #print(permissionArray)
-
-        for permission in permissionArray:
-          if permission['role'] == 'writer':
-            print(permission['emailAddress'])
+        #print(link)
 
         modDateTime = parse(modTime).replace(tzinfo=None)
 
@@ -85,6 +83,7 @@ def gdrive():
 
         three_months = modDate + relativedelta(months=+3)
 
+        #print(today_date)
         print(three_months)
 
         # CHANGE THIS TO BE >= INSTEAD OF <=
@@ -92,11 +91,14 @@ def gdrive():
           # Send message
           print('pog')
           for permission in permissionArray:
+            print(permission)
             if permission['role'] == 'writer':
               print(permission['emailAddress'])
               ropeEmail = permission['emailAddress']
               #print('returning')
-              slackMessage('Please review ' + name, ropeEmail)
+              if '@nutanix' in ropeEmail:
+                print(ropeEmail)
+                slackMessage('Please review ' + name + ' - ' + link, ropeEmail)
         
         
     except HttpError as error:
